@@ -1,0 +1,46 @@
+{
+  "name": "@simple-stream/root",
+  "license": "MIT",
+  "private": true,
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a",
+  "scripts": {
+    "build:targeted": "pnpm build:ui",
+    "build:ui": "turbo build --filter=@simple-stream/ui",
+    "build:web": "turbo build --filter=@simple-stream/web",
+    "changeset": "changeset",
+    "clean": "git clean -xdf node_modules",
+    "dev": "turbo dev --parallel --continue",
+    "format": "prettier --write \"**/*.{ts,tsx,cts,mts,js,jsx,mjs,cjs,json,yaml,yml,css,html,md,mdx}\" --ignore-unknown --cache",
+    "lint": "turbo lint",
+    "prepare": "husky",
+    "typecheck": "turbo typecheck",
+    "clean:house": "cd tooling/eslint && git clean -xdf node_modules .turbo && cd ../prettier && git clean -xdf node_modules .turbo && cd ../typescript && git clean -xdf .turbo node_modules && cd ../jest-presets && git clean -xdf node_modules .turbo && cd ../../packages/ui && git clean -xdf dist .turbo node_modules && cd ../../apps/web && git clean -xdf node_modules .next .turbo && cd ../.. && git clean -xdf node_modules pnpm-lock.yaml && pnpm install && pnpm build:targeted",
+    "generate:base64": "openssl rand -base64 64",
+    "generate:hex": "openssl rand -hex 64",
+    "npm:registry": "npm set registry https://registry.npmjs.org",
+    "run:web": "turbo dev --filter=@simple-stream/web",
+    "latest:pnpm": "corepack use pnpm@latest",
+    "update:pnpm": "curl -fsSL https://get.pnpm.io/install.sh | sh -"
+  },
+  "devDependencies": {
+    "@simple-stream/eslint-config": "workspace:*",
+    "@simple-stream/prettier-config": "workspace:*",
+    "@simple-stream/tsconfig": "workspace:*",
+    "@changesets/cli": "^2.29.7",
+    "@d0paminedriven/turbogen": "^5.6.0",
+    "@types/node": "^24.6.1",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.36.0",
+    "husky": "^9.1.7",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "turbo": "^2.5.8",
+    "typescript": "^5.9.3"
+  },
+  "prettier": "@simple-stream/prettier-config",
+  "engines": {
+    "node": ">=20",
+    "npm": ">=9",
+    "pnpm": ">=9"
+  }
+}
