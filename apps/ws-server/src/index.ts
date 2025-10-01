@@ -3,8 +3,6 @@ import type { Socket } from "net";
 import * as dotenv from "dotenv";
 import type { Signals } from "@/types/index.ts";
 
-export {};
-
 dotenv.config({ quiet: true });
 
 async function exe() {
