@@ -1,0 +1,18 @@
+{
+  "extends": "@simple-stream/tsconfig/node-pkg.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "baseUrl": "./"
+  },
+  "include": [
+    "**/*.ts",
+    "src/**/*.ts",
+    "**/*.mjs",
+    "**/*.preset.ts",
+    "tsup.config.ts"
+  ],
+  "exclude": ["dist"]
+}

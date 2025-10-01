@@ -3,8 +3,9 @@
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
+      "inputs": ["$TURBO_DEFAULT$", ".env", ".env.*"],
       "dependsOn": ["^build"],
-      "cache": true
+      "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "test": {
       "outputs": ["coverage/**"],
@@ -14,7 +15,6 @@
       "dependsOn": ["^build"]
     },
     "dev": {
-      "dependsOn": ["^build"],
       "cache": false,
       "persistent": true
     },
@@ -28,7 +28,53 @@
   "ui": "stream",
   "globalEnv": [
     "COREPACK_ENABLE_STRICT",
+    "DATABASE_URL",
+    "DIRECT_URL",
+    "ENCRYPTION_KEY",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "GITHUB_PAT",
+    "MY_GITHUB_PAT",
+    "NEXT_PUBLIC_WS_URL",
+    "NPM_RC",
     "NODE_ENV",
-    "VERCEL_ENV"
+    "NOTATION_FLAG",
+    "OPEN_AI_KEY",
+    "OPENAI_API_KEY",
+    "PDF_SERVICES_CLIENT_ID",
+    "PDF_SERVICES_CLIENT_SECRET",
+    "PDF_SERVICES_ORGANIZATION_ID",
+    "PGDATABASE",
+    "PGHOST",
+    "PGHOST_UNPOOLED",
+    "PGPASSWORD",
+    "PGUSER",
+    "PORT",
+    "PORT_ONE",
+    "PORT_THREE",
+    "PORT_TWO",
+    "POSTGRES_DATABASE",
+    "POSTGRES_HOST",
+    "POSTGRES_PASSWORD",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL",
+    "POSTGRES_URL_NO_SSL",
+    "POSTGRES_URL_NON_POOLING",
+    "POSTGRES_USER",
+    "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD",
+    "REDIS_CA_PATH",
+    "REDIS_CA_PEM",
+    "REDIS_CLIENT_CERT",
+    "REDIS_CLIENT_KEY",
+    "REDIS_HOST",
+    "REDIS_URL",
+    "RUNWAYML_API_SECRET",
+    "S3_API",
+    "SAFETY_ID_SECRET",
+    "STACK_SECRET_SERVER_KEY",
+    "VERCEL_ENV",
+    "V0_API_KEY",
+    "WS_HOSTNAME",
+    "X_AI_KEY"
   ]
 }

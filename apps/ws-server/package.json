@@ -1,0 +1,95 @@
+{
+  "name": "@simple-stream/ws-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "source": "src/index.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts",
+        "dist/*/index.d.ts"
+      ],
+      "logger": [
+        "dist/logger/index.d.ts"
+      ],
+      "models": [
+        "dist/models/index.d.ts"
+      ],
+      "openai": [
+        "dist/openai/index.d.ts"
+      ],
+      "prisma": [
+        "dist/prisma/index.d.ts"
+      ],
+      "resolver": [
+        "dist/resolver/index.d.ts"
+      ],
+      "types": [
+        "dist/types/index.d.ts"
+      ],
+      "ws-server": [
+        "dist/ws-server/index.d.ts"
+      ]
+    }
+  },
+  "scripts": {
+    "infra:up": "docker compose up -d db redis",
+    "infra:down": "docker compose down",
+    "infra:wait": "wait-on tcp:127.0.0.1:5432 tcp:127.0.0.1:6379",
+    "predev": "pnpm infra:up",
+    "dev": "pnpm infra:wait && nodemon --watch src --ext ts --exit-child --exec \"tsx src/index.ts\"",
+    "build": "tsup",
+    "prrebuild": "pnpm db:generate",
+    "db:generate": "pnpm --filter \"@simple-stream/db\" db:generate",
+    "db:migrate": "pnpm --filter \"@simple-stream/db\" db:migrate",
+    "format": "prettier --write \"src/**/*.{ts,cts,mts,js,mjs,cjs,json,yaml,yml,md}\" --ignore-unknown --cache",
+    "prisma:studio": "pnpm --filter \"@simple-stream/db\" prisma:studio",
+    "clean": "git clean -xdf .turbo dist node_modules",
+    "lint": "eslint",
+    "start": "node dist/index.js"
+  },
+  "prettier": "@simple-stream/prettier-config",
+  "dependencies": {
+    "@d0paminedriven/fs": "^7.6.0",
+    "@simple-stream/db": "workspace:*",
+    "@simple-stream/encryption": "workspace:*",
+    "@simple-stream/key-validator": "workspace:*",
+    "@simple-stream/redis": "workspace:*",
+    "@simple-stream/types": "workspace:*",
+    "@types/node": "^24.6.1",
+    "@types/ws": "^8.18.1",
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^10.0.0",
+    "dotenv-expand": "^12.0.3",
+    "openai": "^6.0.0",
+    "pino": "^9.12.0",
+    "pino-abstract-transport": "^2.0.0",
+    "pino-pretty": "^13.1.1",
+    "redis": "^5.8.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.3",
+    "ws": "^8.18.3"
+  },
+  "devDependencies": {
+    "@simple-stream/eslint-config": "workspace:*",
+    "@simple-stream/jest-presets": "workspace:*",
+    "@simple-stream/prettier-config": "workspace:*",
+    "@simple-stream/tsconfig": "workspace:*",
+    "@types/jest": "^30.0.0",
+    "eslint": "^9.36.0",
+    "jest": "^30.2.0",
+    "jiti": "^2.6.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "terser": "^5.44.0",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript-eslint": "^8.45.0",
+    "wait-on": "^9.0.1"
+  }
+}

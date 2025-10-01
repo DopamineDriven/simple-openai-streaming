@@ -1,0 +1,82 @@
+{
+  "name": "@simple-stream/encryption",
+  "version": "1.0.0",
+  "description": "convenient encryption helper",
+  "publishConfig": {
+    "access": "public",
+    "typesVersions": {
+      "*": {
+        "*": [
+          "dist/*.d.ts",
+          "dist/*/index.d.ts"
+        ],
+        "encryption": [
+          "dist/encryption/index.d.ts"
+        ],
+        "types": [
+          "dist/types/index.d.ts"
+        ]
+      }
+    }
+  },
+  "license": "MIT",
+  "source": "src/index.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts",
+        "dist/*/index.d.ts"
+      ],
+      "encryption": [
+        "dist/encryption/index.d.ts"
+      ],
+      "types": [
+        "dist/types/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist/**/*.{js,cjs,d.ts,d.cts,css}"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./encryption": "./dist/encryption/index.js",
+    "./types": "./dist/types/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build",
+    "lint": "eslint",
+    "format": "prettier --write \"src/**/*.{ts,cts,mts,js,mjs,cjs,json,yaml,yml,css,html,md}\" --ignore-unknown --cache",
+    "clean": "git clean -xdf .turbo dist node_modules",
+    "fix": "npm pkg fix"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "dotenv-expand": "^12.0.3"
+  },
+  "devDependencies": {
+    "@d0paminedriven/fs": "^7.6.0",
+    "@simple-stream/eslint-config": "workspace:*",
+    "@simple-stream/prettier-config": "workspace:*",
+    "@simple-stream/tsconfig": "workspace:*",
+    "@types/node": "^24.6.1",
+    "chokidar": "^4.0.3",
+    "dotenv-cli": "^10.0.0",
+    "eslint": "^9.36.0",
+    "jiti": "^2.6.0",
+    "prettier": "^3.6.2",
+    "terser": "^5.44.0",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0"
+  },
+  "prettier": "@simple-stream/prettier-config"
+}

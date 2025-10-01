@@ -24,6 +24,7 @@
   "devDependencies": {
     "@simple-stream/prettier-config": "workspace:*",
     "@simple-stream/tsconfig": "workspace:*",
+    "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "prettier": "^3.6.2",
     "typescript": "^5.9.3"
