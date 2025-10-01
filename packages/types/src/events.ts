@@ -50,7 +50,6 @@ export type AIChatRequest = {
   hasProviderConfigured?: boolean;
   isDefaultProvider?: boolean;
   metadata?: AIChatRequestUserMetadata;
-  batchId?: string;
 };
 
 export type AIChatInlineData = DX<
