@@ -1,1 +1,2 @@
-### Welcome to the `@simple-stream/*` workspace 👋
+### Welcome to the `@simple-stream/*` workspace
+

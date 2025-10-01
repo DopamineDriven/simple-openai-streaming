@@ -1,0 +1,75 @@
+{
+  "name": "@simple-stream/key-validator",
+  "version": "1.0.0",
+  "description": "convenient key-validator helpers",
+  "publishConfig": {
+    "access": "public",
+    "typesVersions": {
+      "*": {
+        "*": [
+          "dist/*.d.ts",
+          "dist/*/index.d.ts"
+        ],
+        "http": [
+          "dist/http/index.d.ts"
+        ]
+      }
+    }
+  },
+  "license": "MIT",
+  "source": "src/index.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/*.d.ts",
+        "dist/*/index.d.ts"
+      ],
+      "http": [
+        "dist/http/index.d.ts"
+      ]
+    }
+  },
+  "type": "module",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist/**/*.{js,cjs,d.ts,d.cts,d.mts}"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*.js",
+    "./http": "./dist/http/index.js"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "pnpm build",
+    "validate:key": "tsx src/test/index.ts --target validate",
+    "generate:models": "tsx src/test/index.ts --target generate-models",
+    "lint": "eslint",
+    "clean": "git clean -xdf .turbo dist node_modules",
+    "format": "prettier --write \"src/**/*.{ts,cts,mts,js,mjs,cjs,json,yaml,yml,css,html,md}\" --ignore-unknown --cache"
+  },
+  "dependencies": {
+    "@simple-stream/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@d0paminedriven/fs": "^7.6.0",
+    "@simple-stream/eslint-config": "workspace:*",
+    "@simple-stream/prettier-config": "workspace:*",
+    "@simple-stream/tsconfig": "workspace:*",
+    "@types/node": "^24.6.1",
+    "chokidar": "^4.0.3",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.36.0",
+    "jiti": "^2.6.0",
+    "prettier": "^3.6.2",
+    "terser": "^5.44.0",
+    "tslib": "^2.8.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.45.0"
+  },
+  "prettier": "@simple-stream/prettier-config"
+}

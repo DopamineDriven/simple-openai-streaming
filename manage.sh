@@ -132,13 +132,12 @@ build_targeted() {
     local build_order=(
         "@simple-stream/ui"
         "@simple-stream/db"
-        "@simple-stream/redis-service"
-        "@simple-stream/credentials"
         "@simple-stream/encryption"
         "@simple-stream/key-validator"
+        "@simple-stream/redis"
         "@simple-stream/types"
-        "@simple-stream/storage-s3"
         "@simple-stream/ws-server"
+        "@simple-stream/web"
     )
 
     for package in "${build_order[@]}"; do

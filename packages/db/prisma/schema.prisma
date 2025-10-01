@@ -1,0 +1,196 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "nodejs"
+}
+
+generator edge {
+  provider = "prisma-client-js"
+  output   = "../edge/generated/client"
+  runtime  = "vercel-edge"
+}
+
+enum ReasoningEffort {
+  minimal
+  low
+  medium
+  high
+}
+
+enum OutputVerbosity {
+  low
+  medium
+  high
+}
+
+enum SenderType {
+  USER
+  AI
+  SYSTEM
+}
+
+enum ThemePreference {
+  LIGHT
+  DARK
+  SYSTEM
+}
+
+enum Provider {
+  OPENAI
+}
+
+model User {
+  id            String         @id @default(cuid(2))
+  name          String?
+  email         String
+  emailVerified Boolean?
+  image         String?
+  isAnonymous   Boolean?
+  profile       Profile?
+  accounts      Account[]
+  sessions      Session[]
+  keys          UserKey[]
+  conversations Conversation[]
+  settings      Settings?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Profile {
+  id         String  @id @default(cuid(2))
+  bio        String?
+  city       String?
+  region     String?
+  country    String?
+  postalCode String?
+  lat        Float?
+  lng        Float?
+  timezone   String?
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String  @unique
+}
+
+model Account {
+  id                    String    @id @default(cuid(2))
+  userId                String
+  accountId             String
+  providerId            String
+  refreshToken          String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  accessToken           String?
+  scope                 String?
+  password              String?
+  idToken               String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+}
+
+model Session {
+  id        String   @id @default(cuid(2))
+  token     String   @unique
+  userId    String
+  ipAddress String?
+  userAgent String?
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserKey {
+  id        String    @id @default(cuid(2))
+  userId    String
+  provider  Provider
+  apiKey    String    @db.VarChar(512) // encrypted at rest
+  iv        String    @db.VarChar(32) // 16-byte IV (nonce)
+  authTag   String    @db.VarChar(32) // 16-byte auth-tag
+  label     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  Message[] @relation("MessageToUserKey")
+  isDefault Boolean   @default(false)
+
+  @@unique([userId, provider], name: "userId_provider")
+  @@map("UserApiKey")
+}
+
+model Settings {
+  id              String           @id @default(cuid(2))
+  userId          String           @unique
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  theme           ThemePreference? @default(SYSTEM)
+  defaultProvider Provider?
+  defaultModel    String?
+}
+
+model Conversation {
+  id                   String                @id @default(cuid(2))
+  userId               String
+  userKeyId            String?
+  user                 User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title                String?
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  messages             Message[]
+  branchId             String? // For branching conversations
+  parentId             String? // For chat branching
+  isShared             Boolean               @default(false)
+  shareToken           String?               @unique
+  conversationSettings ConversationSettings?
+}
+
+model ConversationSettings {
+  id              String       @id @default(cuid(2))
+  conversationId  String       @unique
+  systemPrompt    String?
+  enableThinking  Boolean?     @default(false)
+  trackUsage      Boolean?     @default(false)
+  enableWebSearch Boolean?     @default(false)
+  maxTokens       Int?
+  usageAlerts     Boolean?     @default(true)
+  temperature     Float?       @default(1.0)
+  topP            Float?       @default(1.0)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  conversation    Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model Message {
+  id               String       @id @default(cuid(2))
+  conversationId   String
+  userId           String?
+  senderType       SenderType   @default(USER)
+  provider         Provider
+  model            String?
+  userKeyId        String?
+  content          String
+  thinkingText     String?
+  thinkingDuration Int?
+  liked            Boolean?     @default(false)
+  disliked         Boolean?     @default(false)
+  tryAgain         Boolean?     @default(false) // resubmit previous prompt to output a new (branched?) response
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  userKey          UserKey?     @relation("MessageToUserKey", fields: [userKeyId], references: [id])
+  conversation     Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
+
+model Verification {
+  id         String   @id @default(cuid(2))
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

@@ -32,8 +32,6 @@ yarn-error.log*
 # turbo
 .turbo
 .vercel
-.npmrc
-
 .idea
 dist
 notes.md

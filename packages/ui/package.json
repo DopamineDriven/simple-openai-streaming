@@ -1,7 +1,7 @@
 {
   "name": "@simple-stream/ui",
   "version": "1.0.0",
-  "description": "convenient ui components",
+  "description": "convenient ui helpers",
   "files": [
     "dist/**/*.{js,mjs,cjs,d.mts,d.ts,d.cts,css}"
   ],

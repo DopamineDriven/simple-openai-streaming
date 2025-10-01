@@ -11,6 +11,9 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
   "editor.quickSuggestions": {
     "other": "on",
     "comments": "off",
@@ -90,8 +93,5 @@
     "plaintext": false,
     "markdown": false,
     "scminput": false
-  },
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma-insider"
   }
 }
