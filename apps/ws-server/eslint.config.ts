@@ -3,7 +3,7 @@ import baseConfig from "@simple-stream/eslint-config/base";
 
 export default [
   ...baseConfig,
-  {
+  {files: ["src/**/*.ts"],
     rules: {
       "@typescript-eslint/no-floating-promises": "off",
       "@typescript-eslint/prefer-includes": "off",
