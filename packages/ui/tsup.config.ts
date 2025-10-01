@@ -2,36 +2,38 @@ import { relative } from "node:path";
 import type { Options } from "tsup";
 import { defineConfig } from "tsup";
 
-const tsupConfig = (options: Options) =>
+const tsupConfig = (
+  options: Omit<
+    Options,
+    | "entry"
+    | "dts"
+    | "external"
+    | "watch"
+    | "keepNames"
+    | "format"
+    | "sourcemap"
+    | "tsconfig"
+    | "clean"
+    | "outDir"
+  >
+) =>
   ({
     entry: [
-      "src/index.ts",
       "src/globals.css",
-      "src/icons/arrow-right.tsx",
-      "src/icons/code.tsx",
-      "src/icons/github.tsx",
-      "src/icons/index.tsx",
-      "src/icons/layers.tsx",
-      "src/icons/moon.tsx",
-      "src/icons/package.tsx",
-      "src/icons/sun.tsx",
-      "src/icons/terminal.tsx",
-      "src/icons/zap.tsx",
-      "src/lib/utils.ts",
-      "src/ui/button.tsx",
+      "src/index.ts",
+      "src/icons/*.tsx",
+      "src/lib/*.ts",
+      "src/ui/*.tsx",
+      "src/ui/base/progress.tsx",
+      "!src/services/icon-workup.ts",
       "!src/services/postbuild.ts"
     ],
-    // esbuildOptions: (options, _) => {
-    //   options.keepNames = true;
-    //   options.minifyIdentifiers = false;
-    // },
-    // minifyIdentifiers: false,
-    // banner: { js: '"use client"' },
     dts: true,
     external: ["react"],
     watch: process.env.NODE_ENV === "development",
     keepNames: true,
-    format: ["cjs", "esm"],
+    target: ["esnext"],
+    format: ["esm"],
     sourcemap: true,
     tsconfig: relative(process.cwd(), "tsconfig.json"),
     clean: true,

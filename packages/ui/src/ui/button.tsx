@@ -35,30 +35,29 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
+interface ButtonProps
   extends ComponentPropsWithRef<"button">,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
-const Button = ({
+function Button({
   className,
   variant,
   size,
   asChild = false,
   ref,
   ...props
-}: ButtonProps) => {
+}: ButtonProps) {
   const Comp = asChild ? Slot : "button";
   return (
     <Comp
+      data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
       ref={ref}
       {...props}
     />
   );
-};
+}
 
-Button.displayName = "Button";
-
-export { Button, buttonVariants };
+export { Button, buttonVariants, type ButtonProps };

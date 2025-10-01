@@ -8,12 +8,13 @@
     "declaration": true,
     "declarationMap": true,
     "importHelpers": false,
+    "exactOptionalPropertyTypes": true,
     "incremental": true,
-    "module": "Node16",
+    "module": "node18",
     "moduleResolution": "NodeNext",
     "noEmit": true,
     "sourceMap": true,
-    "target": "ESNext",
+    "target": "esnext",
     "useDefineForClassFields": true
   }
 }
