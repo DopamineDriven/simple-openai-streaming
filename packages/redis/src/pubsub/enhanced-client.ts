@@ -22,10 +22,9 @@ export class EnhancedRedisPubSub extends RedisInstance {
 
   constructor(
     url: string,
-    host: string,
     options: EnhancedRedisPubSubOptions = {}
   ) {
-    super(url, host);
+    super(url);
     this.options = {
       heartbeatInterval: options.heartbeatInterval ?? 20000,
       enableHeartbeat: options.enableHeartbeat ?? true

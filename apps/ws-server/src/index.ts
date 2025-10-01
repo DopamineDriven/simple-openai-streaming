@@ -3,8 +3,6 @@ import type { Socket } from "net";
 import * as dotenv from "dotenv";
 import type { Signals } from "@/types/index.ts";
 
-export {};
-
 dotenv.config({ quiet: true });
 
 async function exe() {
@@ -32,11 +30,11 @@ async function exe() {
     const logger = LoggerService.getLoggerInstance(loggerConfig),
       log = logger.getPinoInstance();
 
-    const redisUrl = "redis://localhost:6379",
-      host = "localhost";
+    const redisUrl = "redis://localhost:6379";
+    
     const { EnhancedRedisPubSub } = await import("@simple-stream/redis");
 
-    const redisInstance = new EnhancedRedisPubSub(redisUrl, host);
+    const redisInstance = new EnhancedRedisPubSub(redisUrl);
 
     const connectionString = process.env.DATABASE_URL ?? "";
 

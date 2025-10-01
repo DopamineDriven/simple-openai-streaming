@@ -15,17 +15,14 @@ export class RedisInstance {
   #client: RedisClientEntity;
   // Singleton instance storage
   private static instance: RedisInstance | null = null;
-  constructor(
-    public url: string,
-    private host: string
-  ) {
+  constructor(public url: string) {
     this.#client = createClient({
       url,
       pingInterval: 30000,
       socket: {
-        tls: true,
-        host: this.host,
-        socketTimeout: 900000,
+        keepAlive: true,
+        keepAliveInitialDelay: 10000,
+        noDelay: true,
         connectTimeout: 10000,
         reconnectStrategy: (retries, cause) => {
           if (retries > 20) {
@@ -79,10 +76,10 @@ export class RedisInstance {
    * @param url Optional Redis URL - only used on first call
    * @returns The singleton RedisInstance
    */
-  public static getInstance(url: string, host: string): RedisInstance {
+  public static getInstance(url: string): RedisInstance {
     if (!RedisInstance.instance) {
       const redisUrl = url ?? process.env.REDIS_URL ?? "redis://localhost:6379";
-      RedisInstance.instance = new RedisInstance(redisUrl, host);
+      RedisInstance.instance = new RedisInstance(redisUrl);
     }
     return RedisInstance.instance;
   }

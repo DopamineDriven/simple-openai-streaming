@@ -38,13 +38,13 @@
     }
   },
   "scripts": {
-    "infra:up": "docker compose up -d db redis",
+    "infra:up": "docker compose up -d",
     "infra:down": "docker compose down",
-    "infra:wait": "wait-on tcp:127.0.0.1:5432 tcp:127.0.0.1:6379",
+    "infra:wait": "wait-on tcp:127.0.0.1:6379",
     "predev": "pnpm infra:up",
     "dev": "pnpm infra:wait && nodemon --watch src --ext ts --exit-child --exec \"tsx src/index.ts\"",
     "build": "tsup",
-    "prrebuild": "pnpm db:generate",
+    "prebuild": "pnpm db:generate",
     "db:generate": "pnpm --filter \"@simple-stream/db\" db:generate",
     "db:migrate": "pnpm --filter \"@simple-stream/db\" db:migrate",
     "format": "prettier --write \"src/**/*.{ts,cts,mts,js,mjs,cjs,json,yaml,yml,md}\" --ignore-unknown --cache",
