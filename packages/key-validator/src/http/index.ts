@@ -3,9 +3,7 @@ import type {
   OpenAiError,
   OpenAiResponse
 } from "@simple-stream/types";
-import * as dotenv from "dotenv";
 
-dotenv.config({ quiet: true });
 export class KeyValidator {
   private openai_url = "https://api.openai.com/v1/models";
   constructor(

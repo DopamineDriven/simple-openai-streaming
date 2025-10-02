@@ -2,7 +2,7 @@
 
 import type { ButtonProps } from "@simple-stream/ui";
 import { useEffect, useState } from "react";
-import { Button, Copy } from "@simple-streameam/ui";
+import { Button, Copy } from "@simple-stream/ui";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 

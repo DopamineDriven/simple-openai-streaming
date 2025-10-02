@@ -1,8 +1,5 @@
 import crypto from "node:crypto";
-import * as dotenv from "dotenv";
 import type { EncryptedPayload } from "@/types/index.ts";
-
-dotenv.config({ quiet: true });
 
 export class EncryptionService {
   #ALGO = "aes-256-gcm" as const;

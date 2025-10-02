@@ -12,11 +12,8 @@ export const dynamic = "force-dynamic";
 
 const { prismaApiKeyService } = ormHandler(prismaClient);
 export async function generateStaticParams() {
-  const sesh = await getSession();
-  if (!sesh?.user) {
-    return [{ name: "user-id" }];
-  }
-  return [{ name: sesh?.user.id }];
+
+ return [{ name: "user-id" }];
 }
 
 export async function generateMetadata({
@@ -24,8 +21,7 @@ export async function generateMetadata({
 }: InferGSPRT<typeof generateStaticParams>): Promise<Metadata> {
   const { name } = await params;
   if (name !== "user-id") {
-    const sesh = await getSession();
-    const userName = sesh?.user.name ?? name;
+    const userName =name;
     return {
       title: userName + " | Settings"
     };

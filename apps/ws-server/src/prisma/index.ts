@@ -23,7 +23,7 @@ export class PrismaService extends ModelService {
     this.prismaClient = prisma.prismaClient;
   }
 
-  public async getAndValidateUserSessionByEmail(id: string) {
+  public async getAndValidateUserSessionById(id: string) {
     const res = await this.prismaClient.user.findUniqueOrThrow({
       where: { id },
       include: { sessions: true }
