@@ -27,6 +27,8 @@
   },
   "ui": "stream",
   "globalEnv": [
+    "BETTER_AUTH_URL",
+    "BETTER_AUTH_SECRET",
     "COREPACK_ENABLE_STRICT",
     "DATABASE_URL",
     "DIRECT_URL",
