@@ -1,6 +1,6 @@
 "use client";
 
-import type { User } from "next-auth";
+import type { User } from "better-auth";
 import type { Providers as Provider } from "@simple-stream/types";
 import {
   AlertDialog,
@@ -417,16 +417,6 @@ export function ApiKeysTab({
 
   const getPlaceholder = (provider: Provider) => {
     switch (provider) {
-      case "anthropic":
-        return "sk-ant-*******************************************";
-      case "grok":
-        return "xai-*******************************************";
-      case "meta":
-        return "LLM|******************|*******************";
-      case "vercel":
-        return "v0:team_******************:**************";
-      case "gemini":
-        return "AIza********************";
       case "openai":
       default:
         return "sk-************************************************";

@@ -3,7 +3,6 @@ import React, { Suspense } from "react";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { cn } from "@/lib/utils";
-import { PageLayout } from "@/ui/page-layout";
 import "./globals.css";
 import "@simple-stream/ui/globals.css";
 import { getSiteUrl } from "@/lib/site-url";
@@ -128,12 +127,10 @@ export default async function RootLayout({
         <CookieProvider>
           <ThemeProvider attribute={"class"} defaultTheme="system" enableSystem>
             <PathnameProvider>
-              <PageLayout>
-                <Suspense fallback={null}>
-                  <PathnameSync />
-                </Suspense>
-                {children}
-              </PageLayout>
+              <Suspense fallback={null}>
+                <PathnameSync />
+              </Suspense>
+              {children}
             </PathnameProvider>
           </ThemeProvider>
         </CookieProvider>

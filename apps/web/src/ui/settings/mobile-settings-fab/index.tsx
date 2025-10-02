@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { User } from "next-auth";
+import { User } from "better-auth";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 
