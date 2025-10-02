@@ -190,27 +190,30 @@ export class WSServer {
     ws: WebSocket,
     req: IncomingMessage
   ): Promise<{ userId: string; email: string } | null> {
-    const userEmail = this.extractUserEmailFromUrl(req);
+    const uId = this.extractUserIdFromUrl(req);
 
-    if (!userEmail) {
-      ws.close(4001, "no user email, connection closed");
+    if (!uId) {
+      ws.close(4001, "no user id, connection closed");
       return null;
     }
 
-    if (userEmail === "no-user-email") {
-      ws.close(4001, "no user email, connection closed");
+    if (uId === "no-id") {
+      ws.close(4001, "no user id, connection closed");
       return null;
     }
 
     try {
-      const decodedEmail = decodeURIComponent(userEmail);
+      const decodedId = decodeURIComponent(uId);
 
-      const { isValid: userIsValid, userId } =
-        await this.prisma.getAndValidateUserSessionByEmail(decodedEmail);
+      const {
+        isValid: userIsValid,
+        email,
+        userId
+      } = await this.prisma.getAndValidateUserSessionById(decodedId);
 
       if (userIsValid === false) throw new Error("Invalid Session");
 
-      return { userId, email: decodedEmail };
+      return { userId, email };
     } catch (err) {
       if (err instanceof Error) {
         ws.close(4001, `Auth failed: ${err.message}`);
@@ -264,7 +267,7 @@ export class WSServer {
     }
   }
 
-  private extractUserEmailFromUrl(req: IncomingMessage): string | null {
+  private extractUserIdFromUrl(req: IncomingMessage): string | null {
     const rawPath = req?.url ?? "";
     const host = req?.headers?.host;
     if (!host) return null;
@@ -275,7 +278,7 @@ export class WSServer {
     // build a full URL so URL.searchParams works
     try {
       const full = new URL(`${scheme}://${host}${rawPath}`);
-      return full.searchParams.get("email");
+      return full.searchParams.get("id");
     } catch {
       return null;
     }

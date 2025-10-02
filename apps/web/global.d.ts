@@ -1,6 +1,9 @@
 /// <reference types="node" />
 
 declare global {
+  interface Window {
+    chatScrollToBottom?: () =>void;
+  }
   namespace NodeJS {
     interface ProcessEnv {
       readonly VERCEL_ENV: "development" | "production" | "preview";

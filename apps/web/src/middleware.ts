@@ -124,7 +124,7 @@ function detectDeviceAndSetCookies(
 export default async function middleware(req: NextRequest) {
   const session = await getCookieCache(req);
   if (!session) {
-    return NextResponse.redirect(new URL("/sign-in", req.url));
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
   if (req.nextUrl.pathname === "/") {
     return detectDeviceAndSetCookies(

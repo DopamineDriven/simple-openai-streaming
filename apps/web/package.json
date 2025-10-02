@@ -23,6 +23,7 @@
     "@simple-stream/key-validator": "workspace:*",
     "@simple-stream/types": "workspace:*",
     "@simple-stream/ui": "workspace:*",
+    "@tanstack/react-virtual": "^3.13.12",
     "better-auth": "^1.3.24",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",

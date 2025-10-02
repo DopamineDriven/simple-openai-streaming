@@ -57,7 +57,7 @@ interface AIChatContextValue {
 
   // Actions
   // Optionally accept an explicit batchId to associate attachments deterministically
-  sendChat: (prompt: string, explicitBatchId?: string) => void;
+  sendChat: (prompt: string) => void;
   setActiveConversationId: (id: string | null) => void;
   clearError: () => void;
   resetStreamingState: () => void;
