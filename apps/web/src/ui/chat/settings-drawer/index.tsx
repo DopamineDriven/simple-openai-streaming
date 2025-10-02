@@ -18,7 +18,7 @@ import {
   DrawerTitle
 } from "@/ui/atoms/drawer";
 import { ScrollArea } from "@/ui/atoms/scroll-area";
-import { ApiKeysTab } from "@/ui/settings/api-keys-tab"; // Example tab
+import { ApiKeysTab } from "@/ui/api-key-settings"; // Example tab
 import { UserProfileCard } from "@/ui/settings/user-profile-card";
 
 interface SettingsDrawerProps {
@@ -90,7 +90,7 @@ export function SettingsDrawer({ isOpen, onOpenChange }: SettingsDrawerProps) {
                   className="bg-brand-background border-brand-border"
                 />
                 <ApiKeysTab
-                  isProUser={false}
+           
                   className="bg-brand-background border-brand-border rounded-lg p-4"
                 />
               </div>

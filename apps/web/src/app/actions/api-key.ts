@@ -4,7 +4,6 @@ import type { Providers } from "@simple-stream/types";
 import { EncryptionService } from "@simple-stream/encryption";
 import { KeyValidator } from "@simple-stream/key-validator";
 import { toPrismaFormat } from "@simple-stream/types";
-import { revalidatePath } from "next/cache";
 import { prismaClient } from "@/lib/prisma";
 import { getSession } from "@/lib/auth";
 
@@ -61,7 +60,6 @@ export async function upsertApiKey(formdata: FormData) {
     void prismaClient.$accelerate.invalidate({
       tags: [`user_api_keys_${userId}`] as const
     });
-    revalidatePath("/(settings)/settings");
     return { success: true, id: createUserKey.id } as const;
   } else return { success: false, id: message } as const;
 }
@@ -96,7 +94,6 @@ export async function getDecryptedApiKeyOnEdit(
   try {
     const hasKey = decryptMapper.get(provider);
     if (typeof hasKey !== "undefined") {
-      revalidatePath("/(settings)/settings");
       return hasKey;
     }
 
@@ -106,7 +103,6 @@ export async function getDecryptedApiKeyOnEdit(
       iv: rec.iv
     });
     decryptMapper.set(provider, decrypted);
-    revalidatePath("/(settings)/settings");
     return decrypted;
   } catch (err) {
     if (err instanceof Error) {

@@ -8,7 +8,6 @@ import { getSiteUrl } from "@/lib/site-url";
 
 export const authClient = createAuthClient({
   baseURL: getSiteUrl(process.env.NODE_ENV),
-  plugins: [anonymousClient(), customSessionClient<typeof auth>()],
-  basePath: getSiteUrl(process.env.NODE_ENV)
+  plugins: [anonymousClient(), customSessionClient<typeof auth>()]
 });
 export const { signIn, signOut, useSession } = authClient;

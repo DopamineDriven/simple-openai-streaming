@@ -124,11 +124,17 @@ export function MessageBubble({
     setShowMobileActions(true);
   }, []);
 
+  // Precompute streaming content to avoid setState loops during streaming
+  const streamingRenderedContent = useMemo(
+    () => (isStreaming ? processStreamingMarkdown(message.content) : null),
+    [isStreaming, message.content]
+  );
+
   // Process markdown content
   useEffect(() => {
     // For streaming messages, use lightweight processor
     if (isStreaming) {
-      setRenderedContent(processStreamingMarkdown(message.content));
+      // handled via memo to avoid repeated state updates while streaming
       return;
     }
 
@@ -314,7 +320,9 @@ export function MessageBubble({
             <></>
           )}
           <div className="leading-relaxed text-pretty whitespace-pre-wrap">
-            {renderedContent ?? message.content}
+            {isStreaming
+              ? streamingRenderedContent ?? message.content
+              : renderedContent ?? message.content}
           </div>
           <div
             className={cn(

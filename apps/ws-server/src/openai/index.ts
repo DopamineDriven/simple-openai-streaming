@@ -39,7 +39,7 @@ export class OpenAIService {
         { msgPrefix: "[openai] " }
       );
     this.defaultClient = new OpenAI({
-      logLevel: "info",
+      logLevel: "debug",
       apiKey: this.apiKey,
       logger: this.logger
     });
@@ -255,6 +255,7 @@ export class OpenAIService {
       let text: string | undefined = undefined,
         thinkingText: string | undefined = undefined,
         done = false;
+
       if (
         s.type === "response.reasoning_text.delta" ||
         s.type === "response.reasoning_summary_text.delta"
@@ -266,18 +267,17 @@ export class OpenAIService {
 
         thinkingText = s.delta;
       }
-      if (
-        (s.type === "response.reasoning_summary_text.done" ||
-          s.type === "response.reasoning_text.done") &&
-        openaiIsCurrentlyThinking &&
-        openaiThinkingStartTime !== null
-      ) {
-        openaiIsCurrentlyThinking = false;
-        openaiThinkingDuration = Math.round(
-          performance.now() - openaiThinkingStartTime
-        );
-      }
       if (s.type === "response.output_text.delta") {
+        if (
+          openaiIsCurrentlyThinking === true &&
+          openaiThinkingStartTime !== null
+        ) {
+          const endTime = performance.now();
+          openaiThinkingDuration = Math.round(
+            endTime - openaiThinkingStartTime
+          );
+          openaiIsCurrentlyThinking = false;
+        }
         text = s.delta;
       }
       if (s.type === "response.output_text.done") {
@@ -340,7 +340,7 @@ export class OpenAIService {
             temperature,
             topP,
             chunk: text,
-            isThinking: openaiIsCurrentlyThinking,
+            isThinking: false,
             thinkingText:
               openaiThinkingAgg.length > 0 ? openaiThinkingAgg : undefined,
             thinkingDuration:

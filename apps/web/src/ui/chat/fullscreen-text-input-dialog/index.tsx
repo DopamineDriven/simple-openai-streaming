@@ -2,14 +2,14 @@
 
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Textarea,
   X
 } from "@simple-stream/ui";
+import {  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,} from "@/ui/atoms/dialog/index";
 import { useEffect, useState } from "react";
 
 interface FullscreenTextInputDialogProps {

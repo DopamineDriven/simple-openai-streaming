@@ -2,13 +2,13 @@
 
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
   EllipsisHorizontal,
   ShareIcon as Share
 } from "@simple-stream/ui";
+import {  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,} from "@/ui/atoms/dialog/index"
 import { useEffect, useRef } from "react";
 import { AnimatedCopyButtonWithText } from "@/ui/atoms/animated-copy-button-with-text";
 

@@ -4,7 +4,7 @@ import { getCookieCache } from "better-auth/cookies";
 
 export const config = {
   matcher: [
-    "/((?!_next/static|_next/image|favicon.ico|opengraph-image|twitter-image).*)"
+    "/((?!_next/static|_next/image|favicon.ico|opengraph-image|twitter-image|auth/(?:login|signup)).*)"
   ]
 };
 
@@ -123,7 +123,7 @@ function detectDeviceAndSetCookies(
 
 export default async function middleware(req: NextRequest) {
   const session = await getCookieCache(req);
-  if (!session) {
+  if (!session && !req.nextUrl.pathname.includes("/auth")) {
     return NextResponse.redirect(new URL("/auth/login", req.url));
   }
   if (req.nextUrl.pathname === "/") {
