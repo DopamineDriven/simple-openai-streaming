@@ -1,6 +1,7 @@
 "use client";
 
 import type { ComponentPropsWithRef } from "react";
+import { AnonymousIcon } from "@/icons/anonymous";
 import { AnthropicIcon } from "@/icons/anthropic";
 import { ArrowDownCircle } from "@/icons/arrow-down-circle";
 import { ArrowLeft } from "@/icons/arrow-left";
@@ -81,6 +82,7 @@ import { XAiIcon } from "@/icons/xai";
 import { Zap } from "@/icons/zap";
 
 const IconComponents = {
+  AnonymousIcon,
   AnthropicIcon,
   ArrowDownCircle,
   ArrowLeft,
@@ -195,6 +197,7 @@ export const Icon = Object.assign(
 );
 
 export {
+  AnonymousIcon,
   AnthropicIcon,
   ArrowDownCircle,
   ArrowLeft,

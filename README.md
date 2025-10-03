@@ -3,6 +3,10 @@
 - Next.js + WebSocket AI chat demo with a production-leaning architecture
 - Turborepo workspaces, shared packages, and a local ws-server backed by Redis
 
+
+![sign-in](./apps/web/public/sign-in.png)
+
+
 **Overview**
 - apps/web: Next.js 15 (React 19) chat UI with streaming markdown rendering, Tailwind v4, motion/react, better-auth, and an edge‑friendly Prisma client.
 - apps/ws-server: Node WebSocket server that validates sessions, streams responses from OpenAI, and writes to Postgres via a Node‑flavored Prisma client. Locally uses Dockerized Redis (compose.yaml) for pub/sub.
@@ -108,3 +112,9 @@
 - `tooling/typescript` — typescript configs tailored to various contexts
 
 This repo is structured for clarity and portability: typed events across the stack, a robust local dev experience (Dockerized Redis), and a realistic split between edge and node runtimes for database work.
+
+
+![chat](./apps/web/public/gpt-5-nano-chat.png)
+
+
+![landing-page](./apps/web/public/landing-page.png)

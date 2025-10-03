@@ -6,3 +6,7 @@ export const signinGithub = async () => {
   });
   return data;
 };
+export const signinAnonymous = async () => {
+  const data = await authClient.signIn.anonymous();
+  return data;
+};

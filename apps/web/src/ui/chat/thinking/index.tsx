@@ -37,11 +37,14 @@ export function ThinkingSection({
   const startTimeRef = useRef<number | undefined>(undefined);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const lastUpdateRef = useRef<number>(0);
+  const isActiveRef = useRef<boolean>(false);
+  const displayDurationRef = useRef<number>(0);
 
   // Drive the live timer only based on isThinking to avoid loops from rapidly-changing duration
   useEffect(() => {
     if (!isThinking) {
-      // Ensure any active rAF is cancelled when thinking stops
+      // Stop loop when not thinking
+      isActiveRef.current = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = undefined;
@@ -49,30 +52,42 @@ export function ThinkingSection({
       return;
     }
 
+    // To continue this session, run codex resume 0199a7ed-9820-7602-bd17-e7dae6b16a42.
+
     if (!startTimeRef.current) {
       startTimeRef.current = performance.now();
       lastUpdateRef.current = 0;
-      setDisplayDuration(0);
+      // reset the ref so first tick paints "0.0" without a synchronous setState
+      displayDurationRef.current = 0;
     }
 
+    isActiveRef.current = true;
+
     const updateDuration = (currentTime: number) => {
-      if (!startTimeRef.current) return;
+      if (!isActiveRef.current || !startTimeRef.current) return;
+
       const elapsed = currentTime - startTimeRef.current;
       const seconds = elapsed / 1000;
 
       // Throttle to ~10Hz and only update when the displayed value changes at 0.1s precision
       if (currentTime - lastUpdateRef.current >= 100) {
         const rounded = Math.round(seconds * 10) / 10;
-        setDisplayDuration(prev => (prev !== rounded ? rounded : prev));
+        if (displayDurationRef.current !== rounded) {
+          displayDurationRef.current = rounded;
+          setDisplayDuration(rounded);
+        }
         lastUpdateRef.current = currentTime;
       }
 
-      animationFrameRef.current = requestAnimationFrame(updateDuration);
+      if (isActiveRef.current) {
+        animationFrameRef.current = requestAnimationFrame(updateDuration);
+      }
     };
 
     animationFrameRef.current = requestAnimationFrame(updateDuration);
 
     return () => {
+      isActiveRef.current = false;
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
         animationFrameRef.current = undefined;
@@ -93,6 +108,7 @@ export function ThinkingSection({
     // Set the final duration (ms -> s) if provided
     if (typeof duration === "number") {
       const finalSeconds = Math.round((duration / 1000) * 10) / 10;
+      displayDurationRef.current = finalSeconds;
       setDisplayDuration(finalSeconds);
     }
 
@@ -100,7 +116,7 @@ export function ThinkingSection({
     startTimeRef.current = undefined;
     lastUpdateRef.current = 0;
   }, [duration, isThinking]);
-  
+
 
   const { resolvedTheme } = useTheme();
   const { get } = useCookiesCtx();
