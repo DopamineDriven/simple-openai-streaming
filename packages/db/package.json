@@ -6,7 +6,7 @@
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
-    "dev": "tsup src/* --format esm --watch",
+    "dev": "tsup",
     "lint": "eslint",
     "format": "prisma format",
     "clean": "git clean -xdf .turbo dist node_modules",

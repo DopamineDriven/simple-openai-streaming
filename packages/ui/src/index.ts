@@ -4,6 +4,7 @@ import "./globals.css";
 // icons
 export { Icon } from "@/icons/index";
 export type { BaseSVGProps, IconName } from "@/icons/index";
+export { AnonymousIcon } from "@/icons/anonymous";
 export { AnthropicIcon } from "@/icons/anthropic";
 export { ArrowDownCircle } from "@/icons/arrow-down-circle";
 export { ArrowLeft } from "@/icons/arrow-left";
